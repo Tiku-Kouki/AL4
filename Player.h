@@ -12,7 +12,7 @@ public:
 
 
 
-	void Draw(ViewProjection viewProjection);
+	void Draw(ViewProjection &viewProjection);
 
 private:
 

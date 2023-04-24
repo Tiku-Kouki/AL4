@@ -6,9 +6,10 @@ GameScene::GameScene() {}
 
 GameScene::~GameScene() {
 
-delete model_;
-	delete player_;
 
+	delete model_;
+	delete player_;
+	
 }
 
 void GameScene::Initialize() {
@@ -25,6 +26,8 @@ void GameScene::Initialize() {
 	
 
 	player_ = new Player();
+	
+
 	player_->Initalize(model_, textureHandle_);
 	
 }
