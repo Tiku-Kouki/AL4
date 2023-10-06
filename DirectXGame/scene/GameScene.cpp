@@ -24,7 +24,7 @@ void GameScene::Initialize() {
 	viewProjection_.Initialize();
 	
 
-	player_ = std::unique_ptr<Player>();
+	player_ = std::make_unique<Player>();
 	
 
 	player_->Initalize(model_.get(), textureHandle_);

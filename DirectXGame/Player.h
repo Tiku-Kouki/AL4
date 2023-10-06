@@ -5,7 +5,7 @@
 class Player {
 public:
 
-	void Initalize(Model* model, uint32_t textureHandle);
+	void Initalize(Model* model_, uint32_t textureHandle);
 
 
 	void Update();
