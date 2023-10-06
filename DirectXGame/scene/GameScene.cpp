@@ -17,8 +17,9 @@ void GameScene::Initialize() {
 	audio_ = Audio::GetInstance();
 	textureHandle_ = TextureManager::Load("mario.png");
 
-	model_ = Model::Create();
+	model_ = std::unique_ptr<Model>();
 
+	model_.reset(Model::Create());
 	
 	viewProjection_.Initialize();
 	
