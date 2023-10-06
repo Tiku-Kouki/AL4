@@ -7,8 +7,6 @@ GameScene::GameScene() {}
 GameScene::~GameScene() {
 
 
-	delete model_;
-	delete player_;
 	
 }
 
@@ -25,10 +23,10 @@ void GameScene::Initialize() {
 	viewProjection_.Initialize();
 	
 
-	player_ = new Player();
+	player_ = std::unique_ptr<Player>();
 	
 
-	player_->Initalize(model_, textureHandle_);
+	player_->Initalize(model_.get(), textureHandle_);
 	
 }
 
