@@ -4,11 +4,7 @@
 
 GameScene::GameScene() {}
 
-GameScene::~GameScene() {
-
-
-	
-}
+GameScene::~GameScene() {}
 
 void GameScene::Initialize() {
 
@@ -17,24 +13,48 @@ void GameScene::Initialize() {
 	audio_ = Audio::GetInstance();
 	textureHandle_ = TextureManager::Load("mario.png");
 
-	model_ = std::unique_ptr<Model>();
+	model_.reset(Model::CreateFromOBJ("player", true));
 
-	model_.reset(Model::Create());
-	
 	viewProjection_.Initialize();
-	
 
 	player_ = std::make_unique<Player>();
-	
 
 	player_->Initalize(model_.get(), textureHandle_);
-	
+
+	debugCamera_ = new DebugCamera(1280, 720);
+
+	skydome_ = std::make_unique<Skydome>();
+	modelSkydome_.reset(Model::CreateFromOBJ("skydome", true));
+	skydome_->Initialize(modelSkydome_.get());
+
+	ground_ = std::make_unique<Ground>();
+	modelGround_.reset(Model::CreateFromOBJ("ground", true));
+	ground_->Initialize(modelGround_.get());
 }
 
 void GameScene::Update() {
 
-player_->Update();
+	player_->Update();
+	skydome_->Update();
+	ground_->Update();
 
+#ifdef _DEBUG
+
+	if (input_->PushKey(DIK_SPACE)) {
+		isDebugCameraActive_ = true;
+	}
+
+#endif // DEBUG
+	if (isDebugCameraActive_ == true) {
+		debugCamera_->Update();
+		viewProjection_.matView = debugCamera_->GetViewProjection().matView;
+		viewProjection_.matProjection = debugCamera_->GetViewProjection().matProjection;
+
+		viewProjection_.TransferMatrix();
+	} else {
+
+		viewProjection_.UpdateMatrix();
+	}
 }
 
 void GameScene::Draw() {
@@ -66,7 +86,9 @@ void GameScene::Draw() {
 
 	player_->Draw(viewProjection_);
 
+	skydome_->Draw(viewProjection_);
 
+	ground_->Draw(viewProjection_);
 
 	// 3Dオブジェクト描画後処理
 	Model::PostDraw();

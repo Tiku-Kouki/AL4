@@ -7,7 +7,13 @@ void Player::Initalize(Model* model, uint32_t textureHandle) {
 	
 	assert(model); 
 	model_ = model;
-	textureHandle_ = textureHandle;
+	textureHandle = 0;
+
+	
+	worldTransform_.scale_ = {10.0f, 10.0f, 10.0f};
+	worldTransform_.rotation_ = {0.0f, 0.0f, 0.0f};
+	worldTransform_.translation_ = {0.0f, 0.0f, 0.0f};
+
 
 	worldTransform_.Initialize();
 }
@@ -20,7 +26,7 @@ void Player::Update() {
 
 void Player::Draw(ViewProjection &viewProjection) {
 
-model_->Draw(worldTransform_, viewProjection, textureHandle_);
+model_->Draw(worldTransform_, viewProjection);
 
 }
 
