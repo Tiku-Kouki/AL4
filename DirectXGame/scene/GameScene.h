@@ -13,6 +13,7 @@
 #include "DebugCamera.h"
 #include "Skydome.h"
 #include "Ground.h"
+#include "FollowCamera.h"
 
 /// <summary>
 /// ゲームシーン
@@ -66,6 +67,7 @@ private: // メンバ変数
 	ViewProjection viewProjection_;
 	std::unique_ptr<Player> player_ = nullptr;
 	
+	FollowCamera* followCamera_ = nullptr;
 
 	/// <summary>
 	/// ゲームシーン用
