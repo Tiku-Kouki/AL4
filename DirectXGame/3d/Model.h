@@ -117,6 +117,14 @@ public: // メンバ関数
 	/// <returns>メッシュコンテナ</returns>
 	inline const std::vector<Mesh*>& GetMeshes() { return meshes_; }
 
+	/*void SetAlpha(float alpha) { 
+		materials_.find("a");
+		meshes_[0];
+		materials_["a"]->alpha_;
+
+	}*/
+
+
 private: // メンバ変数
 	// 名前
 	std::string name_;

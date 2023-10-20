@@ -18,14 +18,32 @@ void FollowCamera::Update() {
 
 	if (target_) {
 	
-	 Vector3 offset = {0.0f, 10.0f, -20.0f};
+	 Vector3 offset = {0.0f, 8.0f, -20.0f};
+
+	 Matrix4x4 rotateXMatrix = MakeRotateXMatrix(viewProjection_.rotation_.x);
+	 Matrix4x4 rotateYMatrix = MakeRotateYMatrix(viewProjection_.rotation_.y);
+	 Matrix4x4 rotateZMatrix = MakeRotateZMatrix(viewProjection_.rotation_.z);
+
+	Matrix4x4 rotateXYZMatrix = Multiply(rotateXMatrix, Multiply(rotateYMatrix, rotateZMatrix));
+
+
+	 offset = TransformNormal(offset, rotateXYZMatrix);
 
 
 	viewProjection_.translation_ = Add(target_->translation_, offset);
 	
 	
 	}
+	XINPUT_STATE joyState;
 
+	if (Input::GetInstance()->GetJoystickState(0, joyState)) {
+
+		 Vector3 rotationSpeed = {0.01f, 0.01f, 0.01f};
+
+		 viewProjection_.rotation_.y +=
+		     (float)joyState.Gamepad.sThumbRX / SHRT_MAX * rotationSpeed.y;
+
+	}
 
 	
 	worldTransform_.matWorld_ = MakeAffineMatrix(
@@ -33,10 +51,13 @@ void FollowCamera::Update() {
 
 	viewProjection_.matView = Inverse(worldTransform_.matWorld_);
 
+	viewProjection_.UpdateMatrix();
+	// viewProjection_.TransferMatrix();
+
 	ImGui::Begin("Camera");
 
-	ImGui::DragFloat3("Translation", &worldTransform_.translation_.x, 0.01f);
-	ImGui::DragFloat3("Rotation", &worldTransform_.rotation_.x, 0.01f);
+	ImGui::DragFloat3("Translation", &viewProjection_.translation_.x, 0.01f);
+	ImGui::DragFloat3("Rotation", &viewProjection_.rotation_.x, 0.01f);
 
 	ImGui::End();
 

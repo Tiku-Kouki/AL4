@@ -1,4 +1,4 @@
-#include "Player.h"
+﻿#include "Player.h"
 #include "assert.h"
 
 
@@ -25,12 +25,35 @@ void Player::Update() {
 
 	XINPUT_STATE joyState;
 
+	
+
 	if (Input::GetInstance()->GetJoystickState(0, joyState)) {
 
 		move.x += (float)joyState.Gamepad.sThumbLX / SHRT_MAX * kCharacterSpeed;
 
 		move.z += (float)joyState.Gamepad.sThumbLY / SHRT_MAX * kCharacterSpeed;
+	
+		//move = Multiply(kCharacterSpeed, Normalize(move));
+		 
+		
+
+		Matrix4x4 rotateXMatrix = MakeRotateXMatrix(viewProjection_->rotation_.x);
+		Matrix4x4 rotateYMatrix = MakeRotateYMatrix(viewProjection_->rotation_.y);
+		Matrix4x4 rotateZMatrix = MakeRotateZMatrix(viewProjection_->rotation_.z);
+		
+		
+
+		Matrix4x4 rotateXYZMatrix = Multiply(rotateXMatrix, Multiply(rotateYMatrix, rotateZMatrix));
+
+		move = TransformNormal(move, rotateXYZMatrix);
+		if (move.x != 0 || move.z != 0) {
+
+			worldTransform_.rotation_.y = std::atan2(move.x, move.z);
+		}
 	}
+
+
+	
 
 	worldTransform_.translation_.x += move.x;
 	worldTransform_.translation_.y += move.y;

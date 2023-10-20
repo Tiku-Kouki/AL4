@@ -22,11 +22,18 @@ void GameScene::Initialize() {
 
 	viewProjection_.Initialize();
 
+	followCamera_ = new FollowCamera;
+	followCamera_->Initialize();
+
 	player_ = std::make_unique<Player>();
 
 	player_->Initalize(model_.get(), textureHandle_);
 
-	debugCamera_ = new DebugCamera(1280, 720);
+	followCamera_->SetTarget(&player_->GetWorldTransform());
+	
+	player_->SetViewProjection(&followCamera_->GetViewProjection());
+
+	//debugCamera_ = new DebugCamera(1280, 720);
 
 	skydome_ = std::make_unique<Skydome>();
 	modelSkydome_.reset(Model::CreateFromOBJ("skydome", true));
@@ -36,14 +43,14 @@ void GameScene::Initialize() {
 	modelGround_.reset(Model::CreateFromOBJ("ground", true));
 	ground_->Initialize(modelGround_.get());
 
-	followCamera_ = new FollowCamera;
-	followCamera_->Initialize();
-	followCamera_->SetTarget(&player_->GetWorldTransform());
+	
+	
 
 }
 
 void GameScene::Update() {
 
+	
 	player_->Update();
 	skydome_->Update();
 	ground_->Update();
@@ -57,19 +64,13 @@ void GameScene::Update() {
 	}
 
 #endif // DEBUG
-	if (isDebugCameraActive_ == true) {
-		debugCamera_->Update();
-		viewProjection_.matView = debugCamera_->GetViewProjection().matView;
-		viewProjection_.matProjection = debugCamera_->GetViewProjection().matProjection;
-
-		viewProjection_.TransferMatrix();
-	} else {
-		followCamera_->Update();
-		viewProjection_.matView = followCamera_->GetViewProjection().matView;
-		viewProjection_.matProjection = followCamera_->GetViewProjection().matProjection;
-		viewProjection_.TransferMatrix();
-		//viewProjection_.UpdateMatrix();
-	}
+	
+	followCamera_->Update();
+	viewProjection_.matProjection = followCamera_->GetViewProjection().matProjection;
+	viewProjection_.matView = followCamera_->GetViewProjection().matView;
+	viewProjection_.TransferMatrix();
+	//viewProjection_.UpdateMatrix();
+	
 }
 
 void GameScene::Draw() {
