@@ -38,7 +38,7 @@ void FollowCamera::Update() {
 
 	if (Input::GetInstance()->GetJoystickState(0, joyState)) {
 
-		 Vector3 rotationSpeed = {0.01f, 0.01f, 0.01f};
+		 Vector3 rotationSpeed = {0.05f, 0.05f, 0.05f};
 
 		 viewProjection_.rotation_.y +=
 		     (float)joyState.Gamepad.sThumbRX / SHRT_MAX * rotationSpeed.y;
