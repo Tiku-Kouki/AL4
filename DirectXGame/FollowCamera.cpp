@@ -32,7 +32,7 @@ void FollowCamera::Update() {
 	
 	viewProjection_.translation_ = Add(target_->translation_, offset);
 	
-	viewProjection_.translation_.y = 1.0f;
+	viewProjection_.translation_.y = 5.0f;
 	
 	}
 	XINPUT_STATE joyState;

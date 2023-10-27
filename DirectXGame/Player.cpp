@@ -15,7 +15,7 @@ void Player::Initalize(Model* modelBody, Model* modelHead, Model* modelL_arm, Mo
 	//textureHandle = 0;
 
 	
-	//
+	//親子関係の設定
 	worldTransform_[1].parent_ = &worldTransform_[0];
 	worldTransform_[2].parent_ = &worldTransform_[0];
 	worldTransform_[3].parent_ = &worldTransform_[0];

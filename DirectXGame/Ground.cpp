@@ -5,7 +5,7 @@ void Ground::Initialize(Model* model) {
 	assert(model);
 	model_ = model;
 
-	worldTransform_.scale_ = {10.0f, 10.0f, 10.0f};
+	worldTransform_.scale_ = {12.0f, 12.0f, 12.0f};
 	worldTransform_.rotation_ = {0.0f, 0.0f, 0.0f};
 	worldTransform_.translation_ = {0.0f, 0.0f, 0.0f};
 
