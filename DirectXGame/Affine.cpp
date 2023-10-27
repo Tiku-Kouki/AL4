@@ -52,6 +52,21 @@ Vector3 Multiply(float m1, const Vector3& m2) {
 
 }
 
+WorldTransform Multiply(WorldTransform& m1, WorldTransform& m2) {
+
+	WorldTransform a;
+
+	a.scale_ = m1.scale_;
+	a.rotation_ = m1.rotation_;
+
+	a.translation_.x = m1.translation_.x * m2.translation_.x;
+	a.translation_.y = m1.translation_.y * m2.translation_.y;
+	a.translation_.z = m1.translation_.z * m2.translation_.z;
+
+
+	return a;
+}
+
 Matrix4x4 MakeRotateXMatrix(float theta) {
 	Matrix4x4 A = {};
 
@@ -156,11 +171,24 @@ float Length(const Vector3& v) {
 }
 
 Vector3 Normalize(const Vector3& v) {
+
 	float length = Length(v);
 
-	assert(length != 0.0f);
+	/*assert(length != 0.0f);*/
 
-	return {v.x / length, v.y / length, v.z / length};
+	Vector3 result = v;
+
+	if (length != 0) {
+	
+	
+		result.x /= length;
+	
+		result.y /= length;
+	
+		result.z /= length;
+	}
+
+	return result;
 }
 
 Matrix4x4 MakeAffineMatrix(const Vector3& scale, const Vector3& rot, Vector3& translate) {

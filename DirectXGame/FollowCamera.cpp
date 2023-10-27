@@ -3,11 +3,11 @@
 #include "cassert"
 void FollowCamera::Initialize() { 
 	
-	worldTransform_.scale_ = {1.0f, 1.0f, 1.0f};
+	//worldTransform_.scale_ = {1.0f, 1.0f, 1.0f};
 
-	worldTransform_.rotation_ = {0.0f, 0.0f, 0.0f};
+	//worldTransform_.rotation_ = {0.0f, 0.0f, 0.0f};
 
-	worldTransform_.translation_ = {1.0f, 1.0f, 1.0f};
+	//worldTransform_.translation_ = {1.0f, 1.0f, 1.0f};
 	
 	viewProjection_.Initialize();
 
@@ -29,9 +29,10 @@ void FollowCamera::Update() {
 
 	 offset = TransformNormal(offset, rotateXYZMatrix);
 
-
+	
 	viewProjection_.translation_ = Add(target_->translation_, offset);
 	
+	viewProjection_.translation_.y = 1.0f;
 	
 	}
 	XINPUT_STATE joyState;

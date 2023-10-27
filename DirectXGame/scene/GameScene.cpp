@@ -6,8 +6,6 @@ GameScene::GameScene() {}
 
 GameScene::~GameScene() { 
 	
-	delete debugCamera_;
-	delete followCamera_;
 
 }
 
@@ -18,16 +16,34 @@ void GameScene::Initialize() {
 	audio_ = Audio::GetInstance();
 	textureHandle_ = TextureManager::Load("mario.png");
 
-	model_.reset(Model::CreateFromOBJ("player", true));
+	
+
+	// 3Dモデル
+
+	modelFighterBody_.reset(Model::CreateFromOBJ("float_Body", true));
+	modelFighterHead_.reset(Model::CreateFromOBJ("float_Head", true));
+	modelFighterL_arm_.reset(Model::CreateFromOBJ("float_L_arm", true));
+	modelFighterR_arm_.reset(Model::CreateFromOBJ("float_R_arm", true));
+
+
 
 	viewProjection_.Initialize();
 
-	followCamera_ = new FollowCamera;
+	followCamera_ = std::make_unique<FollowCamera>();
+	
 	followCamera_->Initialize();
 
 	player_ = std::make_unique<Player>();
 
-	player_->Initalize(model_.get(), textureHandle_);
+	player_->Initalize(
+		modelFighterBody_.get(), modelFighterHead_.get(), 
+		modelFighterL_arm_.get(),modelFighterR_arm_.get());
+
+
+
+
+
+	
 
 	followCamera_->SetTarget(&player_->GetWorldTransform());
 	

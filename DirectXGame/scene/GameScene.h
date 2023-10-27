@@ -53,8 +53,15 @@ private: // メンバ変数
 
 	uint32_t textureHandle_ = 0;
 	std::unique_ptr <Model> model_ = nullptr;
+
+	//3Dモデル
+	std::unique_ptr<Model> modelFighterBody_ = nullptr;
+	std::unique_ptr<Model> modelFighterHead_ = nullptr;
+	std::unique_ptr<Model> modelFighterL_arm_ = nullptr;
+	std::unique_ptr<Model> modelFighterR_arm_ = nullptr;
+
 	
-	std::unique_ptr <Skydome> skydome_ = nullptr;
+	std::unique_ptr<Skydome> skydome_ = nullptr;
 	std::unique_ptr<Model> modelSkydome_ = nullptr;
 	
 	std::unique_ptr<Ground> ground_ = nullptr;
@@ -67,7 +74,7 @@ private: // メンバ変数
 	ViewProjection viewProjection_;
 	std::unique_ptr<Player> player_ = nullptr;
 	
-	FollowCamera* followCamera_ = nullptr;
+	std::unique_ptr<FollowCamera>followCamera_ = nullptr;
 
 	/// <summary>
 	/// ゲームシーン用
