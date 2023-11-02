@@ -4,13 +4,17 @@
 #include "math.h"
 #include "ImGuiManager.h"
 
-void Player::Initalize(Model* modelBody, Model* modelHead, Model* modelL_arm, Model* modelR_arm) { 
+
+void Player::Initalize(const std::vector<Model*>& models) { 
 	
-	//assert(model); 
-	modelFighterBody_= modelBody;
-	modelFighterHead_ = modelHead;
-	modelFighterL_arm_ = modelL_arm;
-	modelFighterR_arm_ = modelR_arm;
+	BaseCharacter::Initalize(models);
+
+
+	////assert(model); 
+	//modelFighterBody_= modelBody;
+	//modelFighterHead_ = modelHead;
+	//modelFighterL_arm_ = modelL_arm;
+	//modelFighterR_arm_ = modelR_arm;
 
 	//textureHandle = 0;
 
@@ -37,7 +41,7 @@ void Player::Initalize(Model* modelBody, Model* modelHead, Model* modelL_arm, Mo
 	worldTransform_[3].rotation_ = {0.0f, 0.0f, 0.0f};
 	worldTransform_[3].translation_ = {0.51f, 1.26f, 0.0f};
 
-	for (int i = 0; i < 4; i++) {
+	for ( int i = 0; i < 4; i++) {
 		worldTransform_[i].Initialize();
 	}
 	InitializeFloatingGimmick();
@@ -45,6 +49,8 @@ void Player::Initalize(Model* modelBody, Model* modelHead, Model* modelL_arm, Mo
 }
 
 void Player::Update() {
+	BaseCharacter::Update();
+
 	Vector3 move = {0, 0, 0};
 	const float kCharacterSpeed = 0.1f;
 
@@ -72,6 +78,7 @@ void Player::Update() {
 		Matrix4x4 rotateXYZMatrix = Multiply(rotateXMatrix, Multiply(rotateYMatrix, rotateZMatrix));
 
 		move = TransformNormal(move, rotateXYZMatrix);
+		
 		if (move.x != 0 || move.z != 0) {
 
 			for (int i = 0; i < 4; i++) {
@@ -107,17 +114,15 @@ void Player::Update() {
 
 }
 
-void Player::Draw(ViewProjection &viewProjection) {
+void Player::Draw(ViewProjection& viewProjection){
 
-	modelFighterBody_->Draw(worldTransform_[0], viewProjection);
-	modelFighterHead_->Draw(worldTransform_[1], viewProjection);
-	
-	modelFighterL_arm_->Draw(worldTransform_[2], viewProjection);
-	modelFighterR_arm_->Draw(worldTransform_[3], viewProjection);
+	BaseCharacter::Draw(viewProjection);
 
 
-
-
+	models_[modelFighterBody_]->Draw(worldTransform_[0], viewProjection);
+	models_[modelFighterHead_]->Draw(worldTransform_[1], viewProjection);
+	models_[modelFighterL_arm_]->Draw(worldTransform_[2], viewProjection);
+	models_[modelFighterR_arm_]->Draw(worldTransform_[3], viewProjection);
 
 }
 

@@ -6,19 +6,20 @@
 #include <list>
 #include "Windows.h"
 #include "FollowCamera.h"
+#include "BaseCharacter.h"
 
-class Player {
+class Player : public BaseCharacter {
 
  public:
 
-	void Initalize(Model* modelBody, Model* modelHead, Model* modelL_arm, Model* modelR_arm);
+	void Initalize(const std::vector<Model*>& models) override;
 
 
-	void Update();
+	void Update() override;
 
 
 
-	void Draw(ViewProjection &viewProjection);
+	void Draw(ViewProjection& viewProjection) override;
 
 	Vector3 GetWorldPosition();
 

@@ -35,9 +35,11 @@ void GameScene::Initialize() {
 
 	player_ = std::make_unique<Player>();
 
-	player_->Initalize(
-		modelFighterBody_.get(), modelFighterHead_.get(), 
-		modelFighterL_arm_.get(),modelFighterR_arm_.get());
+	std::vector<Model*> plyerModels = {
+	    modelFighterBody_.get(), modelFighterHead_.get(), modelFighterL_arm_.get(),
+	    modelFighterR_arm_.get()};
+
+	player_->Initalize(plyerModels);
 
 
 
