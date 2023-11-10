@@ -10,13 +10,6 @@ void Player::Initalize(const std::vector<Model*>& models) {
 	BaseCharacter::Initalize(models);
 
 
-	////assert(model); 
-	//modelFighterBody_= modelBody;
-	//modelFighterHead_ = modelHead;
-	//modelFighterL_arm_ = modelL_arm;
-	//modelFighterR_arm_ = modelR_arm;
-
-	//textureHandle = 0;
 
 	
 	//親子関係の設定

@@ -25,7 +25,10 @@ void GameScene::Initialize() {
 	modelFighterL_arm_.reset(Model::CreateFromOBJ("float_L_arm", true));
 	modelFighterR_arm_.reset(Model::CreateFromOBJ("float_R_arm", true));
 
-
+	modelEnemyBody_.reset(Model::CreateFromOBJ("needle_Body", true));
+	
+	modelEnemyL_arm_.reset(Model::CreateFromOBJ("needle_L_arm", true));
+	modelEnemyR_arm_.reset(Model::CreateFromOBJ("needle_R_arm", true));
 
 	viewProjection_.Initialize();
 
@@ -41,8 +44,13 @@ void GameScene::Initialize() {
 
 	player_->Initalize(plyerModels);
 
+	enemy_ = std::make_unique<Enemy>();
 
+	std::vector<Model*> enemyModels = {
+	    modelEnemyBody_.get(), modelEnemyL_arm_.get(), 
+		modelEnemyR_arm_.get()};
 
+	enemy_->Initalize(enemyModels);
 
 
 	
@@ -72,7 +80,7 @@ void GameScene::Update() {
 	player_->Update();
 	skydome_->Update();
 	ground_->Update();
-	
+	enemy_->Update();
 
 
 #ifdef _DEBUG
@@ -123,6 +131,8 @@ void GameScene::Draw() {
 	skydome_->Draw(viewProjection_);
 
 	ground_->Draw(viewProjection_);
+
+	enemy_->Draw(viewProjection_);
 
 	// 3Dオブジェクト描画後処理
 	Model::PostDraw();
