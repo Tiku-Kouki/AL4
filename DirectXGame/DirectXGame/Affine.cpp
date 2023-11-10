@@ -52,20 +52,20 @@ Vector3 Multiply(float m1, const Vector3& m2) {
 
 }
 
-//WorldTransform Multiply(WorldTransform& m1, WorldTransform& m2) {
-//
-//	WorldTransform a = nullptr;
-//
-//	a.scale_ = m1.scale_;
-//	a.rotation_ = m1.rotation_;
-//
-//	a.translation_.x = m1.translation_.x * m2.translation_.x;
-//	a.translation_.y = m1.translation_.y * m2.translation_.y;
-//	a.translation_.z = m1.translation_.z * m2.translation_.z;
-//
-//
-//	return a;
-//}
+WorldTransform Multiply(WorldTransform& m1, WorldTransform& m2) {
+
+	WorldTransform a;
+
+	a.scale_ = m1.scale_;
+	a.rotation_ = m1.rotation_;
+
+	a.translation_.x = m1.translation_.x * m2.translation_.x;
+	a.translation_.y = m1.translation_.y * m2.translation_.y;
+	a.translation_.z = m1.translation_.z * m2.translation_.z;
+
+
+	return a;
+}
 
 Matrix4x4 MakeRotateXMatrix(float theta) {
 	Matrix4x4 A = {};

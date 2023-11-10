@@ -3,7 +3,6 @@
 #include "Input.h"
 #include "Model.h"
 #include "WorldTransform.h"
-#include "ViewProjection.h"
 #include <list>
 #include "Windows.h"
 #include "FollowCamera.h"

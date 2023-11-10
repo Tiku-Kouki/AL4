@@ -19,7 +19,7 @@ Matrix4x4 MakeAffineMatrix(const Vector3& scale, const Vector3& rot, Vector3& tr
 
 Matrix4x4 Inverse(const Matrix4x4& m);
 
-//WorldTransform Multiply(WorldTransform& m1, WorldTransform& m2);
+WorldTransform Multiply(WorldTransform& m1, WorldTransform& m2);
 
 // 内積
 float Dot(const Vector3& v1, const Vector3& v2);

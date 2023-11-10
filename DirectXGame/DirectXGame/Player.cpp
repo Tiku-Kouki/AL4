@@ -118,9 +118,12 @@ void Player::Draw(ViewProjection& viewProjection){
 
 	BaseCharacter::Draw(viewProjection);
 
-	for (int i = 0; i < 3; i++) {
-		models_[i]->Draw(worldTransform_[i], viewProjection);
-	}
+
+	models_[modelFighterBody_]->Draw(worldTransform_[0], viewProjection);
+	models_[modelFighterHead_]->Draw(worldTransform_[1], viewProjection);
+	models_[modelFighterL_arm_]->Draw(worldTransform_[2], viewProjection);
+	models_[modelFighterR_arm_]->Draw(worldTransform_[3], viewProjection);
+
 }
 
 

@@ -1,5 +1,5 @@
 #include "DirectXCommon.h"
-#include "DebugText.h"
+#include "SafeDelete.h"
 #include <algorithm>
 #include <cassert>
 #include <thread>
@@ -204,18 +204,10 @@ void DirectXCommon::InitializeDXGIDevice() {
 
 	// 対応レベルの配列
 	D3D_FEATURE_LEVEL levels[] = {
-	    D3D_FEATURE_LEVEL_12_2,
 	    D3D_FEATURE_LEVEL_12_1,
 	    D3D_FEATURE_LEVEL_12_0,
 	    D3D_FEATURE_LEVEL_11_1,
 	    D3D_FEATURE_LEVEL_11_0,
-	};
-	const char* featureLevelStrings[] = {
-	    "12.2", 
-		"12.1", 
-		"12.0", 
-		"11.1", 
-		"11.0",
 	};
 
 	// DXGIファクトリーの生成
@@ -257,8 +249,6 @@ void DirectXCommon::InitializeDXGIDevice() {
 			if (SUCCEEDED(result)) {
 				// デバイスを生成できた時点でループを抜ける
 				featureLevel = levels[levelIndex];
-				DebugText::GetInstance()->ConsolePrintf(
-				    std::format("FeatureLevel : {}\n", featureLevelStrings[levelIndex]).c_str());
 				break;
 			}
 		}
