@@ -116,9 +116,7 @@ void Player::Update() {
 
 void Player::Draw(ViewProjection& viewProjection){
 
-	//BaseCharacter::Draw(viewProjection);
-
-	for (int i = 0; i < 3; i++) {
+	for (int i = 0; i < 4; i++) {
 		models_[i]->Draw(worldTransform_[i], viewProjection);
 	}
 }
