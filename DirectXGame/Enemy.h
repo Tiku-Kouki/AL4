@@ -4,10 +4,8 @@
 #include "Model.h"
 #include "WorldTransform.h"
 #include "ViewProjection.h"
-#include <list>
-#include "Windows.h"
-
 #include "BaseCharacter.h"
+
 class Enemy : public BaseCharacter {
 
 	public:
@@ -22,7 +20,7 @@ class Enemy : public BaseCharacter {
 	
 
 private:
-	WorldTransform worldTransform_[4];
+	WorldTransform worldTransform_[3];
 
 	Model* model_ = nullptr;
 

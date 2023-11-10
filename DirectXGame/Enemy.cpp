@@ -1,7 +1,5 @@
 ﻿#include "Enemy.h"
-#include "assert.h"
-#define _USE_MATH_DEFINES
-#include "math.h"
+
 #include "ImGuiManager.h"
 
 
@@ -22,13 +20,13 @@ void Enemy::Initalize(const std::vector<Model*>& models) {
 
 	worldTransform_[1].scale_ = {1.0f, 1.0f, 1.0f};
 	worldTransform_[1].rotation_ = {0.0f, 0.0f, 0.0f};
-	worldTransform_[1].translation_ = {-0.51f, 1.26f, 0.0f};
+	worldTransform_[1].translation_ = {-0.9f, 1.0f, 0.0f};
 
 	worldTransform_[2].scale_ = {1.0f, 1.0f, 1.0f};
 	worldTransform_[2].rotation_ = {0.0f, 0.0f, 0.0f};
-	worldTransform_[2].translation_ = {0.51f, 1.26f, 0.0f};
+	worldTransform_[2].translation_ = {0.9f, 1.0f, 0.0f};
 
-	for (int i = 0; i < 4; i++) {
+	for (int i = 0; i < 3; i++) {
 		worldTransform_[i].Initialize();
 	}
 	
@@ -37,7 +35,7 @@ void Enemy::Initalize(const std::vector<Model*>& models) {
 void Enemy::Update() {
 
 	BaseCharacter::Update();
-	for (int i = 0; i < 4; i++) {
+	for (int i = 0; i < 3; i++) {
 		
 
 		worldTransform_[i].UpdateMatrix();
@@ -54,7 +52,7 @@ void Enemy::Update() {
 
 void Enemy::Draw(ViewProjection& viewProjection) {
 
-	for (int i = 0; i < 4; i++) {
+	for (int i = 0; i < 3; i++) {
 		models_[i]->Draw(worldTransform_[i], viewProjection);
 	}
 }
