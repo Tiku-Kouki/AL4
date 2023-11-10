@@ -7,7 +7,7 @@
 class BaseCharacter {
 
 public:
-	virtual void Initalize(const std::vector<Model*> models);
+	virtual void Initalize(const std::vector<Model*>& models);
 
 	virtual void Update();
 
