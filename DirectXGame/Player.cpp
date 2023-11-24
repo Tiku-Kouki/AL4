@@ -177,7 +177,18 @@ void Player::BehaviorRootUpdate() {
 
 void Player::BehaviorAttackUpdate() {}
 
-void Player::BehaviorRootInitialize() {}
+void Player::BehaviorRootInitialize() {
+
+
+	worldTransform_[2].scale_ = {1.0f, 1.0f, 1.0f};
+	worldTransform_[2].rotation_ = {0.0f, 0.0f, 0.0f};
+	worldTransform_[2].translation_ = {-0.51f, 1.26f, 0.0f};
+
+	worldTransform_[3].scale_ = {1.0f, 1.0f, 1.0f};
+	worldTransform_[3].rotation_ = {0.0f, 0.0f, 0.0f};
+	worldTransform_[3].translation_ = {0.51f, 1.26f, 0.0f};
+
+}
 
 void Player::BehaviorAttackInitialize() {
 
