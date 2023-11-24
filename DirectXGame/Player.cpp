@@ -17,6 +17,7 @@ void Player::Initalize(const std::vector<Model*>& models) {
 	worldTransform_[2].parent_ = &worldTransform_[0];
 	worldTransform_[3].parent_ = &worldTransform_[0];
 
+	hammer.parent_ = &worldTransform_[0];
 
 	worldTransform_[0].scale_ = {3.0f, 3.0f, 3.0f};
 	worldTransform_[0].rotation_ = {0.0f, 0.0f, 0.0f};
@@ -34,9 +35,16 @@ void Player::Initalize(const std::vector<Model*>& models) {
 	worldTransform_[3].rotation_ = {0.0f, 0.0f, 0.0f};
 	worldTransform_[3].translation_ = {0.51f, 1.26f, 0.0f};
 
+	hammer.scale_ = {1.0f, 1.0f, 1.0f};
+
+	hammer.rotation_ = {0.0f, 0.0f, 0.0f};
+
+	hammer.translation_ = {0.0f, 0.0f, 0.0f};
+
 	for ( int i = 0; i < 4; i++) {
 		worldTransform_[i].Initialize();
 	}
+	hammer.Initialize();
 	InitializeFloatingGimmick();
 
 }
@@ -49,7 +57,11 @@ void Player::Update() {
 		
 
 		worldTransform_[i].UpdateMatrix();
+
+
 	}
+	hammer.UpdateMatrix();
+
 
 	ImGui::Begin("player");
 
@@ -60,6 +72,7 @@ void Player::Update() {
 
 	ImGui::DragFloat3("Arm_L_rot", &worldTransform_[2].rotation_.x, 0.01f);
 	ImGui::DragFloat3("Arm_R_rot", &worldTransform_[3].rotation_.x, 0.01f);
+	ImGui::DragFloat3("hammer", &hammer.rotation_.x, 0.01f);
 
 	ImGui::End();
 
@@ -70,7 +83,7 @@ void Player::Draw(ViewProjection& viewProjection){
 	for (int i = 0; i < 4; i++) {
 		models_[i]->Draw(worldTransform_[i], viewProjection);
 	}
-
+	models_[4]->Draw(hammer, viewProjection);
 
 }
 

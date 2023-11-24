@@ -25,6 +25,8 @@ void GameScene::Initialize() {
 	modelFighterL_arm_.reset(Model::CreateFromOBJ("float_L_arm", true));
 	modelFighterR_arm_.reset(Model::CreateFromOBJ("float_R_arm", true));
 
+	Hammer.reset(Model::CreateFromOBJ("hammer", true));
+
 	modelEnemyBody_.reset(Model::CreateFromOBJ("needle_Body", true));
 	
 	modelEnemyL_arm_.reset(Model::CreateFromOBJ("needle_L_arm", true));
@@ -40,7 +42,7 @@ void GameScene::Initialize() {
 
 	std::vector<Model*> plyerModels = {
 	    modelFighterBody_.get(), modelFighterHead_.get(), modelFighterL_arm_.get(),
-	    modelFighterR_arm_.get()};
+	    modelFighterR_arm_.get(), Hammer.get()};
 
 	player_->Initalize(plyerModels);
 

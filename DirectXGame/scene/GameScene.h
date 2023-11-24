@@ -61,6 +61,8 @@ private: // メンバ変数
 	std::unique_ptr<Model> modelFighterL_arm_ = nullptr;
 	std::unique_ptr<Model> modelFighterR_arm_ = nullptr;
 
+	std::unique_ptr<Model> Hammer = nullptr;
+
 	// 3Dモデル
 	std::unique_ptr<Model> modelEnemyBody_ = nullptr;
 	std::unique_ptr<Model> modelEnemyL_arm_ = nullptr;

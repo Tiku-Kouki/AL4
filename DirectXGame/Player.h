@@ -43,6 +43,8 @@ private:
 
 	WorldTransform worldTransform_[4];
 
+	WorldTransform hammer;
+
 	Input* input_ = nullptr;
 
 	uint32_t textureHandle_ = 0u;
