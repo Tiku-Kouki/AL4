@@ -33,6 +33,12 @@ class Player : public BaseCharacter {
 	//浮遊ギミック更新
 	void UpdateFloatingGimmick();
 
+	//通常行動更新
+	void BehaviorRootUpdate();
+	// 攻撃行動更新 
+	void BehaviorAttackUpdate();
+
+
 private:
 
 	WorldTransform worldTransform_[4];

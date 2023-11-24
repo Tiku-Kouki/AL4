@@ -42,59 +42,9 @@ void Player::Initalize(const std::vector<Model*>& models) {
 }
 
 void Player::Update() {
-	BaseCharacter::Update();
-
-	Vector3 move = {0, 0, 0};
-	const float kCharacterSpeed = 0.1f;
-
-
-	XINPUT_STATE joyState;
-
 	
+	BehaviorRootUpdate();
 
-	if (Input::GetInstance()->GetJoystickState(0, joyState)) {
-
-		move.x += (float)joyState.Gamepad.sThumbLX / SHRT_MAX * kCharacterSpeed;
-
-		move.z += (float)joyState.Gamepad.sThumbLY / SHRT_MAX * kCharacterSpeed;
-	
-		//move = Multiply(kCharacterSpeed, Normalize(move));
-		 
-		
-
-		Matrix4x4 rotateXMatrix = MakeRotateXMatrix(viewProjection_->rotation_.x);
-		Matrix4x4 rotateYMatrix = MakeRotateYMatrix(viewProjection_->rotation_.y);
-		Matrix4x4 rotateZMatrix = MakeRotateZMatrix(viewProjection_->rotation_.z);
-		
-		
-
-		Matrix4x4 rotateXYZMatrix = Multiply(rotateXMatrix, Multiply(rotateYMatrix, rotateZMatrix));
-
-		move = TransformNormal(move, rotateXYZMatrix);
-		
-		if (move.x != 0 || move.z != 0) {
-
-			for (int i = 0; i < 4; i++) {
-				worldTransform_[0].rotation_.y = std::atan2(move.x, move.z);
-			}
-
-		}
-	}
-
-	UpdateFloatingGimmick();
-	
-	
-
-	
-
-	for (int i = 0; i < 4; i++) {
-		worldTransform_[0].translation_.x += move.x;
-		worldTransform_[0].translation_.y += move.y;
-		worldTransform_[0].translation_.z += move.z;
-
-		worldTransform_[i].UpdateMatrix();
-	}
-	
 	ImGui::Begin("player");
 
 	ImGui::DragFloat3("Body", &worldTransform_[0].translation_.x, 0.01f);
@@ -103,7 +53,6 @@ void Player::Update() {
 	ImGui::DragFloat3("Arm_R", &worldTransform_[3].translation_.x, 0.01f);
 
 	ImGui::End();
-	
 
 }
 
@@ -151,3 +100,55 @@ void Player::UpdateFloatingGimmick() {
 		worldTransform_[0].translation_.y = std::sin(floatingParameter_) * swingWidth;
 	}
 }
+
+void Player::BehaviorRootUpdate() {
+
+   BaseCharacter::Update();
+
+	Vector3 move = {0, 0, 0};
+	const float kCharacterSpeed = 0.1f;
+
+	XINPUT_STATE joyState;
+
+	if (Input::GetInstance()->GetJoystickState(0, joyState)) {
+
+		move.x += (float)joyState.Gamepad.sThumbLX / SHRT_MAX * kCharacterSpeed;
+
+		move.z += (float)joyState.Gamepad.sThumbLY / SHRT_MAX * kCharacterSpeed;
+
+		// move = Multiply(kCharacterSpeed, Normalize(move));
+
+		Matrix4x4 rotateXMatrix = MakeRotateXMatrix(viewProjection_->rotation_.x);
+		Matrix4x4 rotateYMatrix = MakeRotateYMatrix(viewProjection_->rotation_.y);
+		Matrix4x4 rotateZMatrix = MakeRotateZMatrix(viewProjection_->rotation_.z);
+
+		Matrix4x4 rotateXYZMatrix = Multiply(rotateXMatrix, Multiply(rotateYMatrix, rotateZMatrix));
+
+		move = TransformNormal(move, rotateXYZMatrix);
+
+		if (move.x != 0 || move.z != 0) {
+
+			for (int i = 0; i < 4; i++) {
+				worldTransform_[0].rotation_.y = std::atan2(move.x, move.z);
+			}
+		}
+	}
+
+	UpdateFloatingGimmick();
+
+	for (int i = 0; i < 4; i++) {
+		worldTransform_[0].translation_.x += move.x;
+		worldTransform_[0].translation_.y += move.y;
+		worldTransform_[0].translation_.z += move.z;
+
+		worldTransform_[i].UpdateMatrix();
+	}
+
+	
+	
+
+
+
+}
+
+void Player::BehaviorAttackUpdate() {}
