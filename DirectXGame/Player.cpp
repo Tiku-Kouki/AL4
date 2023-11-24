@@ -176,3 +176,16 @@ void Player::BehaviorRootUpdate() {
 }
 
 void Player::BehaviorAttackUpdate() {}
+
+void Player::BehaviorRootInitialize() {}
+
+void Player::BehaviorAttackInitialize() {
+
+	hammer.scale_ = {1.0f, 1.0f, 1.0f};
+
+	hammer.rotation_ = {0.0f, 0.0f, 0.0f};
+
+	hammer.translation_ = {0.0f, 0.0f, 0.0f};
+
+
+}

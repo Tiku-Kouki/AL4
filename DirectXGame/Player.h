@@ -38,6 +38,11 @@ class Player : public BaseCharacter {
 	// 攻撃行動更新 
 	void BehaviorAttackUpdate();
 
+	// 通常行動初期化
+	void BehaviorRootInitialize();
+	// 攻撃行動初期化
+	void BehaviorAttackInitialize();
+
 
 private:
 
