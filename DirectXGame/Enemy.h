@@ -36,7 +36,7 @@ private:
 	// 　カメラのビュープロジェクション
 	const ViewProjection* viewProjection_ = nullptr;
 
-	
+	  float angle = 0.0f;
 
 
 
