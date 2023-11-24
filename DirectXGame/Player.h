@@ -43,13 +43,13 @@ private:
 
 	WorldTransform worldTransform_[4];
 
-	Model* model_ = nullptr;
+	//Model* model_ = nullptr;
 
-	// 3Dモデル
-	Model* modelFighterBody_ = nullptr;
-	Model* modelFighterHead_ = nullptr;
-	Model* modelFighterL_arm_ = nullptr;
-	Model* modelFighterR_arm_ = nullptr;
+	//// 3Dモデル
+	//Model* modelFighterBody_ = nullptr;
+	//Model* modelFighterHead_ = nullptr;
+	//Model* modelFighterL_arm_ = nullptr;
+	//Model* modelFighterR_arm_ = nullptr;
 
 
 	Input* input_ = nullptr;

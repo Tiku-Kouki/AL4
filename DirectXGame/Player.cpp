@@ -45,12 +45,21 @@ void Player::Update() {
 	
 	BehaviorRootUpdate();
 
+	for (int i = 0; i < 4; i++) {
+		
+
+		worldTransform_[i].UpdateMatrix();
+	}
+
 	ImGui::Begin("player");
 
 	ImGui::DragFloat3("Body", &worldTransform_[0].translation_.x, 0.01f);
 	ImGui::DragFloat3("Head", &worldTransform_[1].translation_.x, 0.01f);
 	ImGui::DragFloat3("Arm_L", &worldTransform_[2].translation_.x, 0.01f);
 	ImGui::DragFloat3("Arm_R", &worldTransform_[3].translation_.x, 0.01f);
+
+	ImGui::DragFloat3("Arm_L_rot", &worldTransform_[2].rotation_.x, 0.01f);
+	ImGui::DragFloat3("Arm_R_rot", &worldTransform_[3].rotation_.x, 0.01f);
 
 	ImGui::End();
 
@@ -61,6 +70,8 @@ void Player::Draw(ViewProjection& viewProjection){
 	for (int i = 0; i < 4; i++) {
 		models_[i]->Draw(worldTransform_[i], viewProjection);
 	}
+
+
 }
 
 
