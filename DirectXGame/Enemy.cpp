@@ -37,12 +37,9 @@ void Enemy::Update() {
 
 	BaseCharacter::Update();
 	
-	angle -= 1.0f / 180.0f * (float)M_PI;
+	angle += 1.0f / 180.0f * (float)M_PI;
 
-	worldTransform_[0].rotation_.y =
-	    std::atan2(
-			0.0f - worldTransform_[0].translation_.x,
-			0.0f - worldTransform_[0].translation_.z);
+	worldTransform_[0].rotation_.y = -angle;
 		
 
 	worldTransform_[0].translation_.x = 0 + std::cos(angle) * 10.0f;
