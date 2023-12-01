@@ -232,7 +232,11 @@ void Player::BehaviorAttackUpdate() {
 	Ease = c3 * X * X * X - c1 * X * X;
 	}
 
-	
+	if (X <= 1.15 && X >= 1.1) {
+
+	worldTransform_[0].translation_.x += 2.0;
+	}
+
 	worldTransform_[2].rotation_.x = Ease + 3.0f;
 
 	  worldTransform_[3].rotation_.x = Ease + 3.0f;
