@@ -39,7 +39,7 @@ void Player::Initalize(const std::vector<Model*>& models) {
 
 	hammer.rotation_ = {0.0f, 0.0f, 0.0f};
 
-	hammer.translation_ = {0.0f, 0.0f, 0.0f};
+	hammer.translation_ = {0.0f, 1.0f, 0.0f};
 
 	for ( int i = 0; i < 4; i++) {
 		worldTransform_[i].Initialize();
@@ -51,7 +51,42 @@ void Player::Initalize(const std::vector<Model*>& models) {
 
 void Player::Update() {
 	
-	BehaviorRootUpdate();
+	if (behaviorRequest_) {
+	
+	behavior_ = behaviorRequest_.value();
+	
+	switch (behavior_) {
+	case Behavior::kRoot:
+	default:
+		BehaviorRootInitialize();
+		break;
+	case Behavior::kAttack:
+		
+		BehaviorAttackInitialize();
+		
+		break;
+	}
+	   //振る舞いリセット
+	  behaviorRequest_ = std::nullopt;
+	}
+
+	switch (behavior_) {
+	case Behavior::kRoot:
+	default:
+	  BehaviorRootUpdate();
+	  
+	  break;
+	case Behavior::kAttack:
+
+	  BehaviorAttackUpdate();
+
+	  break;
+	}
+
+
+
+	//BehaviorRootUpdate();
+	//BehaviorAttackUpdate();
 
 	for (int i = 0; i < 4; i++) {
 		
@@ -70,8 +105,8 @@ void Player::Update() {
 	ImGui::DragFloat3("Arm_L", &worldTransform_[2].translation_.x, 0.01f);
 	ImGui::DragFloat3("Arm_R", &worldTransform_[3].translation_.x, 0.01f);
 
-	ImGui::DragFloat3("Arm_L_rot", &worldTransform_[2].rotation_.x, 0.01f);
-	ImGui::DragFloat3("Arm_R_rot", &worldTransform_[3].rotation_.x, 0.01f);
+	ImGui::DragFloat3("hammer", &worldTransform_[2].rotation_.x, 0.01f);
+	ImGui::DragFloat3("hammer", &worldTransform_[3].rotation_.x, 0.01f);
 	ImGui::DragFloat3("hammer", &hammer.rotation_.x, 0.01f);
 
 	ImGui::End();
@@ -83,8 +118,11 @@ void Player::Draw(ViewProjection& viewProjection){
 	for (int i = 0; i < 4; i++) {
 		models_[i]->Draw(worldTransform_[i], viewProjection);
 	}
-	models_[4]->Draw(hammer, viewProjection);
 
+	if (behavior_ == Behavior::kAttack) {
+
+		models_[4]->Draw(hammer, viewProjection);
+	}
 }
 
 
@@ -136,6 +174,12 @@ void Player::BehaviorRootUpdate() {
 
 	if (Input::GetInstance()->GetJoystickState(0, joyState)) {
 
+		if (joyState.Gamepad.wButtons == XINPUT_GAMEPAD_A) {
+
+		behaviorRequest_ = Behavior::kAttack;
+		}
+
+
 		move.x += (float)joyState.Gamepad.sThumbLX / SHRT_MAX * kCharacterSpeed;
 
 		move.z += (float)joyState.Gamepad.sThumbLY / SHRT_MAX * kCharacterSpeed;
@@ -175,7 +219,38 @@ void Player::BehaviorRootUpdate() {
 
 }
 
-void Player::BehaviorAttackUpdate() {}
+void Player::BehaviorAttackUpdate() {
+
+	X += 0.05f;
+
+	const float c1 = 1.70158f;
+	const float c3 = c1 + 1;
+	
+	if (X < 1.13) {
+
+		
+	Ease = c3 * X * X * X - c1 * X * X;
+	}
+
+	
+	worldTransform_[2].rotation_.x = Ease + 3.0f;
+
+	  worldTransform_[3].rotation_.x = Ease + 3.0f;
+	
+	hammer.rotation_.x = Ease;
+
+	if (X >= 2.6) {
+	
+
+	X = 0;
+	
+	behaviorRequest_ = Behavior::kRoot;
+
+	}
+
+
+
+}
 
 void Player::BehaviorRootInitialize() {
 
@@ -192,11 +267,21 @@ void Player::BehaviorRootInitialize() {
 
 void Player::BehaviorAttackInitialize() {
 
+	worldTransform_[0].translation_.y = 0.0f;
+
+	worldTransform_[2].scale_ = {1.0f, 1.0f, 1.0f};
+	worldTransform_[2].rotation_ = {3.0f, 0.0f, 0.0f};
+	worldTransform_[2].translation_ = {-0.51f, 1.26f, 0.0f};
+
+	worldTransform_[3].scale_ = {1.0f, 1.0f, 1.0f};
+	worldTransform_[3].rotation_ = {3.0f, 0.0f, 0.0f};
+	worldTransform_[3].translation_ = {0.51f, 1.26f, 0.0f};
+
 	hammer.scale_ = {1.0f, 1.0f, 1.0f};
 
 	hammer.rotation_ = {0.0f, 0.0f, 0.0f};
 
-	hammer.translation_ = {0.0f, 0.0f, 0.0f};
-
+	hammer.translation_ = {0.0f, 1.0f, 0.0f};
+	X = 0;
 
 }

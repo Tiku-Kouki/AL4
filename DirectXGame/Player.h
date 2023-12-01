@@ -8,8 +8,19 @@
 #include "Windows.h"
 #include "FollowCamera.h"
 #include "BaseCharacter.h"
+#include <optional>
+
+
 
 class Player : public BaseCharacter {
+
+	enum  class Behavior {
+		kRoot,
+		kAttack,
+
+	};
+
+
 
  public:
 
@@ -60,7 +71,12 @@ private:
 	//浮遊ギミックの媒介変数
 	float floatingParameter_ = 0.0f;
 
+	  //振るまい
+	Behavior behavior_ = Behavior::kRoot;
 
+	std::optional<Behavior> behaviorRequest_ = std::nullopt;
 
+	float X = 0;
+	float Ease = 0;
 
 	};
