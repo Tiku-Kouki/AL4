@@ -3,12 +3,19 @@
 #define _USE_MATH_DEFINES
 #include "math.h"
 #include "ImGuiManager.h"
+#include "GlobalVariables.h"
 
 
 void Player::Initalize(const std::vector<Model*>& models) { 
 	
 	BaseCharacter::Initalize(models);
 
+	GlobalVariables* globalVariables = GlobalVariables::GetInstance();
+	const char* groupName = "Player";
+
+	GlobalVariables::GetInstance()->CreateGroup(groupName);
+
+	globalVariables->SetValue(groupName, "Test", 90);
 
 
 	
