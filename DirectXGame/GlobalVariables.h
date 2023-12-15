@@ -4,6 +4,7 @@
 #include <string>
 #include <variant>
 
+
 class GlobalVariables final {
 
 public:
@@ -18,8 +19,15 @@ public:
 	/// <summary>
 	/// グループの作成
 	/// </summary>
-	///< param name="groupName">グループ名</param>
+	///<param name="groupName">グループ名</param>
 	void CreateGroup(const std::string& groupName);
+
+	/// <summary>
+	/// ファイルに書き出し
+	/// </summary>
+	///<param name="groupName">グループ</param>
+	void SaveFile(const std::string& groupName);
+
 
 	void SetValue(const std::string& groupName, const std::string& key, int32_t value);
 	void SetValue(const std::string& groupName, const std::string& key, float value);
@@ -49,6 +57,6 @@ private:
 	// 全データ
 	std::map<std::string, Group> datas_;
 
-public:
+using json=nlohmann::json;
 
 };

@@ -1,5 +1,6 @@
 ﻿#include "GlobalVariables.h"
 #include <ImGuiManager.h>
+ #include <json.hpp>
 
 
 GlobalVariables* GlobalVariables::GetInstance() { 
@@ -72,6 +73,12 @@ ImGui::End();
 void GlobalVariables::CreateGroup(const std::string& groupName) {
  	//指定のオブジェクトがなければ追加する
 	datas_[groupName];
+
+}
+
+void GlobalVariables::SaveFile(const std::string& groupName) {
+
+
 
 }
 
