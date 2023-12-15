@@ -1,6 +1,6 @@
 ﻿#include "GlobalVariables.h"
 #include <ImGuiManager.h>
- #include <json.hpp>
+ /*#include <json.hpp>*/
 
 
 GlobalVariables* GlobalVariables::GetInstance() { 
@@ -76,11 +76,11 @@ void GlobalVariables::CreateGroup(const std::string& groupName) {
 
 }
 
-void GlobalVariables::SaveFile(const std::string& groupName) {
-
-
-
-}
+//void GlobalVariables::SaveFile(const std::string& groupName) {
+//
+//
+//
+//}
 
 void GlobalVariables::SetValue(
     const std::string& groupName, const std::string& key, int32_t value) {
