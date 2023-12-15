@@ -16,7 +16,7 @@ void Player::Initalize(const std::vector<Model*>& models) {
 	GlobalVariables::GetInstance()->CreateGroup(groupName);
 
 	globalVariables->SetValue(groupName, "Test", 90);
-
+	globalVariables->SaveFile("Player");
 
 	
 	//親子関係の設定
@@ -90,6 +90,7 @@ void Player::Update() {
 	  break;
 	}
 
+	 
 
 
 	//BehaviorRootUpdate();
