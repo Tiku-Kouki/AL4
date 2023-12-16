@@ -28,6 +28,11 @@ public:
 	///<param name="groupName">グループ</param>
 	void SaveFile(const std::string& groupName);
 
+	/// <summary>
+	/// ファイルから読み込む
+	/// </summary>
+	///< param name="groupName">グループ</param>
+	void LoadFile(const std::string& groupName);
 
 	void SetValue(const std::string& groupName, const std::string& key, int32_t value);
 	void SetValue(const std::string& groupName, const std::string& key, float value);

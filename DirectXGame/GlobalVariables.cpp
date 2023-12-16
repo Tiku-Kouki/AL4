@@ -147,6 +147,26 @@ void GlobalVariables::SaveFile(const std::string& groupName) {
 
 }
 
+void GlobalVariables::LoadFile(const std::string& groupName) {
+
+	 std::ofstream ofs;
+
+	 
+
+	  if (ofs.fail()) {
+		std::string message = "Failed open date file for write";
+		MessageBoxA(nullptr, message.c_str(), "GlobalVariables", 0);
+		assert(0);
+
+		return;
+	  }
+
+	   std::filesystem::directory_iterator dir_it(ofs.fail());
+
+	
+
+}
+
 void GlobalVariables::SetValue(
     const std::string& groupName, const std::string& key, int32_t value) {
 
