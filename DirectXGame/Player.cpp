@@ -252,6 +252,25 @@ void Player::BehaviorAttackUpdate() {
 
 	}
 
+	/*attackTime++;
+
+	if (attackTime <= attackMaxTime) {
+
+	float frame = (attackTime / attackMaxTime);
+	float easeInBack = EaseInBack(frame * frame);
+	float weaponAngle = (float)(90) * easeInBack;
+	float armAngle = (float)(120) * easeInBack;
+
+	worldTransform_[2].rotation_.x = armAngle + 3.0f;
+
+	worldTransform_[3].rotation_.x = armAngle + 3.0f;
+
+	hammer.rotation_.x = weaponAngle;
+
+	} else if (attackTime >= attackAllFrame) {
+	attackTime = 0;
+	behaviorRequest_ = Behavior::kRoot;
+	}*/
 
 
 }

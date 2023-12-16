@@ -521,4 +521,9 @@ Vector3 Add(const Vector3& v1, float v2) {
 }
 
 
+ float EaseInBack(float x) {
+	const float c1 = 1.70158f;
+	const float c3 = c1 + 1;
 
+	return c3 * x * x * x - c1 * x * x;
+}
