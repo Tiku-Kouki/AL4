@@ -17,7 +17,7 @@ class Player : public BaseCharacter {
 	enum  class Behavior {
 		kRoot,
 		kAttack,
-
+		kJump,
 	};
 
 
@@ -54,6 +54,11 @@ class Player : public BaseCharacter {
 	// 攻撃行動初期化
 	void BehaviorAttackInitialize();
 
+	// ジャンプ行動初期化
+	void BehaviorJumpInitialize();
+	// ジャンプ行動更新
+	void BehaviorJumpUpdate();
+
 
 	//調整項目の適応
 	void ApplyGrobalVariables();
@@ -81,5 +86,10 @@ private:
 
 	float X = 0;
 	float Ease = 0;
+
+	// 速度 
+	 Vector3 velocity_ = {};
+
+	
 
 	};
