@@ -15,7 +15,10 @@ void Player::Initalize(const std::vector<Model*>& models) {
 
 	GlobalVariables::GetInstance()->CreateGroup(groupName);
 
-	globalVariables->SetValue(groupName, "Test", 90);
+	globalVariables->AddItem(groupName, "Test", 90);
+
+	
+
 	globalVariables->SaveFile("Player");
 
 	
@@ -42,6 +45,13 @@ void Player::Initalize(const std::vector<Model*>& models) {
 	worldTransform_[3].rotation_ = {0.0f, 0.0f, 0.0f};
 	worldTransform_[3].translation_ = {0.51f, 1.26f, 0.0f};
 
+
+	globalVariables->AddItem(groupName, "Head", worldTransform_[1].translation_);
+	globalVariables->AddItem(groupName, "ArmL", worldTransform_[2].translation_);
+	globalVariables->AddItem(groupName, "ArmR", worldTransform_[3].translation_);
+	
+	  
+
 	hammer.scale_ = {1.0f, 1.0f, 1.0f};
 
 	hammer.rotation_ = {0.0f, 0.0f, 0.0f};
@@ -58,6 +68,8 @@ void Player::Initalize(const std::vector<Model*>& models) {
 
 void Player::Update() {
 	
+	
+
 	if (behaviorRequest_) {
 	
 	behavior_ = behaviorRequest_.value();
@@ -103,6 +115,9 @@ void Player::Update() {
 
 
 	}
+
+	
+
 	hammer.UpdateMatrix();
 
 
@@ -118,6 +133,8 @@ void Player::Update() {
 	ImGui::DragFloat3("hammer", &hammer.rotation_.x, 0.01f);
 
 	ImGui::End();
+
+	ApplyGrobalVariables();
 
 }
 
@@ -291,5 +308,20 @@ void Player::BehaviorAttackInitialize() {
 
 	hammer.translation_ = {0.0f, 1.0f, 0.0f};
 	X = 0;
+
+}
+
+void Player::ApplyGrobalVariables() {
+	
+	GlobalVariables* globalVariables = GlobalVariables::GetInstance();
+	const char* groupName = "Player";
+
+	worldTransform_[1].translation_ = globalVariables->GetVector3Value(groupName, "Head");
+
+	worldTransform_[2].translation_ = globalVariables->GetVector3Value(groupName, "ArmL");
+
+	worldTransform_[3].translation_ = globalVariables->GetVector3Value(groupName, "ArmR");
+
+
 
 }

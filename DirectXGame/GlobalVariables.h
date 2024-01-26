@@ -29,6 +29,11 @@ public:
 	void SaveFile(const std::string& groupName);
 
 	/// <summary>
+	/// ディレクトリの全ファイル読み込み
+	/// </summary>
+	void LoadFiles();
+
+	/// <summary>
 	/// ファイルから読み込む
 	/// </summary>
 	///< param name="groupName">グループ</param>
@@ -38,9 +43,16 @@ public:
 	void SetValue(const std::string& groupName, const std::string& key, float value);
 	void SetValue(const std::string& groupName, const std::string& key, Vector3& value);
 
+	void AddItem(const std::string& groupName, const std::string& key, int32_t value);
+	void AddItem(const std::string& groupName, const std::string& key, float value);
+	void AddItem(const std::string& groupName, const std::string& key, Vector3& value);
 
 
+	int32_t GetIntValue(const std::string& groupName, const std::string& key) const;
 
+	float GetFloatValue(const std::string& groupName, const std::string& key) const;
+
+	Vector3 GetVector3Value(const std::string& groupName, const std::string& key) const;
 
 private:
 	GlobalVariables() = default;
@@ -64,7 +76,7 @@ private:
 
 
 	using json=nlohmann::json;
-
+	 //グローバル変数の保存先ファイルパス
 	const std::string kDirectoryPath = "Resources/GrobalVariables/";
 
 

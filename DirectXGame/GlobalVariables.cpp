@@ -60,14 +60,6 @@ void GlobalVariables::Update() {
 			MessageBoxA(nullptr, message.c_str(), "GlobalVariables", 0);
 
 		}
-
-
-
-
-
-
-
-
 		ImGui::EndMenu();
 	}
 
@@ -127,7 +119,7 @@ void GlobalVariables::SaveFile(const std::string& groupName) {
 
 	// 書き込むJSONファイルのフルパスを合成する
 	std::string filePath = kDirectoryPath + groupName + ".json";
-	//
+	//書き込み用
 	std::ofstream ofs;
 
 	ofs.open(filePath);
@@ -147,23 +139,99 @@ void GlobalVariables::SaveFile(const std::string& groupName) {
 
 }
 
+void GlobalVariables::LoadFiles() {
+
+	std::string dsk = kDirectoryPath;
+
+	  if (!!std::filesystem::exists(dsk)) {
+
+		return;
+	  }
+
+	  std::filesystem::directory_iterator dir_it(dsk);
+
+	  for (const std::filesystem::directory_entry& entry : dir_it) {
+
+		// ファイルパスを取得
+		const std::filesystem::path& filePath = entry.path();
+
+		// ファイル拡張子を取得
+		std::string extension = filePath.extension().string();
+		//.jsonファイル以外はスキップ
+		if (extension.compare(".json") != 0) {
+			continue;
+		}
+
+		// ファイル読み込み
+		LoadFile(filePath.stem().string());
+	  }
+
+
+}
+
 void GlobalVariables::LoadFile(const std::string& groupName) {
 
-	 std::ofstream ofs;
-
 	 
+	   // 書き込むJSONファイルのフルパスを合成する
+	   std::string filePath = kDirectoryPath + groupName + ".json";
+	   // 書き込み用
+	   std::ifstream ifs;
 
-	  if (ofs.fail()) {
+	   ifs.open(filePath);
+
+		if (ifs.fail()) {
 		std::string message = "Failed open date file for write";
 		MessageBoxA(nullptr, message.c_str(), "GlobalVariables", 0);
 		assert(0);
 
 		return;
-	  }
+	   }
 
-	   std::filesystem::directory_iterator dir_it(ofs.fail());
+		json root;
 
-	
+		//json文字列からjsonのデータ構造に展開
+	    ifs >> root;
+
+		ifs.close();
+
+
+		//グループを検索
+	    json::iterator itGroup = root.find(groupName);
+
+		//未登録チェック
+	    assert(itGroup != root.end());
+
+		//各アイテムについて
+	    for (json::iterator itItem = itGroup->begin(); itItem != itGroup->end(); ++itItem) {
+	    //アイテム名を取得
+		const std::string& itemName = itItem.key();
+
+		 // int32_t型
+		if (itItem->is_number_integer()) {
+		// int型の値を登録
+			int32_t value = itItem->get<int32_t>();
+			SetValue(groupName, itemName, value);
+		
+		
+		} else 
+		//float				
+		if (itItem->is_number_float()) {
+			// float型の値を登録
+			double value = itItem->get<double>();
+			SetValue(groupName, itemName, static_cast<float>(value));
+		
+		} else 
+		//　要素数3の配列であれば	
+		if (itItem->is_array() && itItem->size() == 3) {
+			//float型のjson配列登録
+			Vector3 value = {itItem->at(0), itItem->at(1), itItem->at(2)};
+			SetValue(groupName, itemName, value);
+
+		}
+		}
+
+
+
 
 }
 
@@ -198,4 +266,69 @@ void GlobalVariables::SetValue(
 	newItem.value = value;
 
 	group.items[key] = newItem;
+}
+
+void GlobalVariables::AddItem(const std::string& groupName, const std::string& key, int32_t value) {
+
+	
+
+	if (!datas_.contains(key)) {
+	
+		SetValue(groupName, key, value);
+	
+	}
+
+
+}
+
+void GlobalVariables::AddItem(const std::string& groupName, const std::string& key, float value) {
+
+	if (!datas_.contains(key)) {
+
+		SetValue(groupName, key, value);
+	}
+
+}
+
+void GlobalVariables::AddItem(
+    const std::string& groupName, const std::string& key, Vector3& value) {
+
+if (!datas_.contains(key)) {
+
+		SetValue(groupName, key, value);
+	}
+
+}
+
+int32_t GlobalVariables::GetIntValue(const std::string& groupName, const std::string& key) const {
+
+	assert(datas_.contains(groupName));
+
+
+	const Group& group = datas_.at(groupName);
+
+	assert(group.items.contains(key));
+
+	
+	return std::get<int32_t>(group.items.at(key).value);
+}
+
+float GlobalVariables::GetFloatValue(const std::string& groupName, const std::string& key) const {
+	assert(datas_.contains(groupName));
+
+	const Group& group = datas_.at(groupName);
+
+	assert(group.items.contains(key));
+
+	return std::get<float>(group.items.at(key).value);
+}
+
+Vector3 GlobalVariables::GetVector3Value(const std::string& groupName, const std::string& key) const {
+	assert(datas_.contains(groupName));
+
+	const Group& group = datas_.at(groupName);
+
+	assert(group.items.contains(key));
+
+	return std::get<Vector3>(group.items.at(key).value);
 }

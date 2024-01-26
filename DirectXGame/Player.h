@@ -9,7 +9,7 @@
 #include "FollowCamera.h"
 #include "BaseCharacter.h"
 #include <optional>
-
+#include "GlobalVariables.h"
 
 
 class Player : public BaseCharacter {
@@ -54,6 +54,9 @@ class Player : public BaseCharacter {
 	// 攻撃行動初期化
 	void BehaviorAttackInitialize();
 
+
+	//調整項目の適応
+	void ApplyGrobalVariables();
 
 private:
 
