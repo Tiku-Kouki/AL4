@@ -45,14 +45,15 @@ void GameScene::Initialize() {
 	    modelFighterR_arm_.get(), Hammer.get()};
 
 	player_->Initalize(plyerModels);
-
-	enemy_ = std::make_unique<Enemy>();
+	for (std::unique_ptr<Enemy> enemis : enemies_) {
+		enemies_ = std::make_unique<Enemy>();
+	}
 
 	std::vector<Model*> enemyModels = {
 	    modelEnemyBody_.get(), modelEnemyL_arm_.get(), 
 		modelEnemyR_arm_.get()};
 
-	enemy_->Initalize(enemyModels);
+	//enemies_->Initalize(enemyModels);
 
 
 	

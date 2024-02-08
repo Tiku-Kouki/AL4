@@ -15,6 +15,7 @@
 #include "Ground.h"
 #include "FollowCamera.h"
 #include "Enemy.h"
+#include "LockOn.h"
 
 /// <summary>
 /// ゲームシーン
@@ -81,9 +82,13 @@ private: // メンバ変数
 
 	ViewProjection viewProjection_;
 	std::unique_ptr<Player> player_ = nullptr;
-	std::unique_ptr<Enemy> enemy_ = nullptr;
+	std::list<std::unique_ptr<Enemy> >enemies_ = nullptr;
 
 	std::unique_ptr<FollowCamera>followCamera_ = nullptr;
+
+	
+	 std::unique_ptr<LockOn> lockOn_;
+
 
 	/// <summary>
 	/// ゲームシーン用
